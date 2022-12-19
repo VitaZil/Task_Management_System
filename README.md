@@ -26,14 +26,12 @@ https://github.com/VitaZil/Task_management_system.git
 composer install
 ```
 
-3. Add your db credentials(database, username and password) to the .env.example file and rename it to .env
-
-4. To create all the nessesary tables and columns, run the following
+3. To create all the nessesary tables and columns, run the following
 ```sh
 php -f migrate.php
 ```
 
-5. Start localhost from terminal 
+4. Start localhost from terminal 
 ```sh
 php -S localhost:8080
 ```
