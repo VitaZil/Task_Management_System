@@ -1,0 +1,15 @@
+{
+    "name": "vitab/task_management_system",
+    "autoload": {
+        "psr-4": {
+            "Vitab\\TaskManagementSystem\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Vita Žilionė",
+            "email": "102750381+VitaZil@users.noreply.github.com"
+        }
+    ],
+    "require": {}
+}
