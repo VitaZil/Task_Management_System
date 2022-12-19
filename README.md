@@ -1,6 +1,6 @@
 ﻿# Task_management_App
 
-## In Task Management App you can do these things:
+## In this Task Management App you can do these things:
 
 - Add new employee with different possibilities to work 3 jobs at the same time or just one
 - Add new task for employees (choose from 1 to 3 employees)
