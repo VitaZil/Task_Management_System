@@ -11,7 +11,7 @@
 
 ## Built With
 
-HTML, CSS, PHP languages and MySQL database.
+HTML, CSS, Vanilla PHP languages and MySQL database.
 
 
 ## Setup
