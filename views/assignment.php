@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Document</title>
 </head>
-<body>
+<body class="mx-9 my-10">
 
 <?php require __DIR__ . '/navigation.php' ?>
 
 <a href="/newemployee">New Employee</a>
 <a href="/newtask">New Assignment</a>
-
-<table>
+<div class="text-center">
+<table class="">
     <tr>
         <th>Title</th>
         <th>Employees</th>
@@ -51,5 +51,6 @@
     <?php endforeach; ?>
 
 </table>
+</div>
 </body>
 </html>

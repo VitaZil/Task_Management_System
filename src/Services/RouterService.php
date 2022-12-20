@@ -35,15 +35,16 @@ class RouterService
     public function doRouting(?string $path, string $method, array $params): void
     {
         $id = null;
+        $firstPart = explode('?', $path);
+        $urlData = $firstPart[1] ?? '';
+        $pathParts = explode('/', $firstPart[0]);
 
-        $pathParts = explode('/', $path);
         if (isset($pathParts[2]) && is_numeric($pathParts[2])) {
             $id = (int) $pathParts[2];
             $pathParts[2] = '{id}';
         }
 
         $routePath = implode('/', $pathParts);
-
 
         [$controller, $function] = $this->getControllerAndFunction(
             strlen($routePath) > 1 ? rtrim($routePath, '/') : $routePath,
@@ -67,7 +68,7 @@ class RouterService
             return;
         }
 
-        $c->$function();
+        $c->$function($urlData);
 
     }
 

@@ -11,5 +11,7 @@
             "email": "102750381+VitaZil@users.noreply.github.com"
         }
     ],
-    "require": {}
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.25"
+    }
 }

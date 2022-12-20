@@ -21,16 +21,16 @@ class TaskController
         $task = new Task();
 
         try {
-            foreach ($request['employee'] as $employee) {
-                if ($employee != '' && !array_unique($request['employee'])) {
-                    throw new NotTheSameEmployeeInOneTask;
-                }
-
-                $task->store([
-                    'title' => $request['title'],
-                    'employee_id' => [$employee]
-                ]);
+            if (($request['employee'][0] === $request['employee'][1])
+                || ($request['employee'][1] === $request['employee'][2] && $request['employee'][2] != '')
+                || ($request['employee'][0] === $request['employee'][2])) {
+                throw new NotTheSameEmployeeInOneTask;
             }
+
+            $task->store([
+                'title' => $request['title'],
+                'employee_id' => [$request['employee']]
+            ]);
 
             header('Location: /');
 
@@ -46,21 +46,21 @@ class TaskController
     public function edit(): void
     {
         $task = new Task();
-        $assignments = $task->getAssignments();
+        $assignments = $task->getRunningAssignments();
 
         require './views/assignment.php';
     }
 
-    public function index(): void
+    public function index($request): void
     {
         $task = new Task();
+        $currentPage = $request['page'] ?? 1;
+        $assignmentsPerPage = 5;
 
-        $currentPage = $_GET['page'] ?? 1;
-
-        $assignments = $task->getAssignmentsWithPagination($currentPage);
-
-        $pageNumber = $task->getPageNumber();
-
+        $assignments = $task->getArchiveAssignments($currentPage, $assignmentsPerPage);
+        $dataForPage = $task->getPageNumber($assignmentsPerPage);
+        $pageNumber = $dataForPage[0];
+        $numberOfItems = $dataForPage[1];
         require './views/archive.php';
     }
 

@@ -1,5 +1,6 @@
 <?php
 
+use Vitab\TaskManagementSystem\Controllers\CsvFileController;
 use Vitab\TaskManagementSystem\Controllers\TaskController;
 use Vitab\TaskManagementSystem\Controllers\EmployeeController;
 use Vitab\TaskManagementSystem\Services\RouterService;
@@ -14,4 +15,7 @@ RouterService::get('/', TaskController::class, 'edit');
 RouterService::post('/complete', TaskController::class, 'update');
 RouterService::get('/archive', TaskController::class, 'index');
 RouterService::post('/delete', TaskController::class, 'delete');
+
+
+RouterService::get('/export', CsvFileController::class, 'exportCsv');
 

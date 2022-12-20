@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css">
-    <link rel="stylesheet" href="assets/bootstrap/bootstrap.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <title>Document</title>
 </head>
 <body>
 
 <?php require __DIR__ . '/navigation.php' ?>
+
+<a href="/export">Export to .csv</a>
 
 <table class="table table-striped table-bordered">
     <thead class="thead-dark">
@@ -37,11 +39,21 @@
         <?php endif; ?>
     <?php endforeach; ?>
     </tbody>
-    <br>
-    <?php foreach (range(1, $pageNumber) as $page): ?>
-    <a href="/archive?page=<?= $page ?>" ><?= $page ?></a>
-    <?php endforeach; ?>
 
 </table>
+<span>Total <?= $numberOfItems ?> results</span>
+
+<span><?= $currentPage ?> </span>
+<br>
+<?php foreach (range(1, $pageNumber) as $page): ?>
+    <?php if ($currentPage == $page): ?>
+<a class="font-bold" href="/archive?page=<?= $page ?>" ><?= $page ?></a>
+<?php else: ?>
+    <a href="/archive?page=<?= $page ?>" ><?= $page ?></a>
+<?php endif; ?>
+
+<?php endforeach; ?>
+<br>
+
 </body>
 </html>

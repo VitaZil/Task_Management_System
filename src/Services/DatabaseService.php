@@ -31,6 +31,6 @@ class DatabaseService
         $statement = $this->connection->prepare($sql);
         $statement->execute();
 
-        return $statement->fetchAll(PDO::FETCH_BOTH);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 }
