@@ -30,9 +30,9 @@
             <?php endif; ?>
 
             <input class="relative block w-full appearance-none rounded-none rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                   type="text" maxlength="10" name="firstname" placeholder="First Name" required>
+                   type="text" maxlength="10" name="firstname" placeholder="First Name" value="<?= isset($request) ?  $request['firstname'] : ''; ?>" required>
             <input class="relative block w-full appearance-none rounded-none rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                   type="text" maxlength="10" name="lastname" placeholder="Last Name" required>
+                   type="text" maxlength="10" name="lastname" placeholder="Last Name" value="<?= isset($request) ?  $request['lastname'] : ''; ?>" required>
 
             <div class="flex items-center">
                 <input class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" type="checkbox"

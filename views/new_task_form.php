@@ -30,7 +30,7 @@
 
         <form class="mt-8 space-y-6" method="POST" action="/newtask">
             <input class="relative block w-full appearance-none rounded-none rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                   type="text" maxlength="255" name="title" placeholder="Title" required>
+                   type="text" maxlength="255" name="title" placeholder="Title" value="<?= isset($request) ?  $request['title'] : ''; ?>" required>
             <label class="ml-2 block text-sm text-gray-900">Select from 1 to 3 employees:</label>
 
             <select class="relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
