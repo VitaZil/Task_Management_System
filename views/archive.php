@@ -10,50 +10,78 @@
 </head>
 <body>
 
-<?php require __DIR__ . '/navigation.php' ?>
+<?php require __DIR__ . '/components/navigation.php' ?>
 
-<a href="/export">Export to .csv</a>
+<div class="items-center justify-center py-2 px-20 ">
 
-<table class="table table-striped table-bordered">
-    <thead class="thead-dark">
-    <tr>
-        <th>Title</th>
-        <th>Employees</th>
-        <th>Created At</th>
-        <th>Completed At</th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php foreach ($assignments as $assignment): ?>
-        <?php if ($assignment['status'] === 'complete'): ?>
-            <tr>
-                <td><?= $assignment['title'] ?></td>
-                <td>
-                    <?php foreach (explode(',', $assignment['name']) as $name): ?>
-                        <span><?= $name ?></span><br>
-                    <?php endforeach; ?>
-                </td>
-                <td><?= $assignment['created_at'] ?></td>
-                <td><?= $assignment['updated_at'] ?></td>
-            </tr>
-        <?php endif; ?>
-    <?php endforeach; ?>
-    </tbody>
+    <div class="py-10 px-20">
+        <a href="/export"
+           class="w-24 my-1 justify-center rounded-md bg-indigo-600 py-3 px-5 text-md font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" class="inline w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/>
+            </svg>
+            Export to .csv
+        </a>
 
-</table>
-<span>Total <?= $numberOfItems ?> results</span>
+        <div class="flex flex-col">
+            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="py-4 inline-block min-w-full sm:px-6 lg:px-8">
+                    <div class="overflow-hidden">
+                        <?php if (count($assignments) === 0): ?>
+                            <p class="mt-6 text-center text-lg font-bold tracking-tight text-gray-900">
+                                There is no assignments</p>
+                        <?php else: ?>
+                            <table class="table-auto min-w-full text-center mt-5">
+                                <thead class="border-b bg-gray-800">
+                                <tr>
+                                    <th scope="col" class="text-md font-medium text-white px-6 py-4">
+                                        Title
+                                    </th>
+                                    <th scope="col" class="text-md font-medium text-white px-6 py-4">
+                                        Employees
+                                    </th>
+                                    <th scope="col" class="text-md font-medium text-white px-6 py-4">
+                                        Created At
+                                    </th>
+                                    <th scope="col" class="text-md font-medium text-white px-6 py-4">
+                                        Completed At
+                                    </th>
+                                </tr>
+                                </thead class="border-b">
+                                <tbody>
+                                <tr class="bg-white border-b">
+                                    <?php foreach ($assignments
 
-<span><?= $currentPage ?> </span>
-<br>
-<?php foreach (range(1, $pageNumber) as $page): ?>
-    <?php if ($currentPage == $page): ?>
-<a class="font-bold" href="/archive?page=<?= $page ?>" ><?= $page ?></a>
-<?php else: ?>
-    <a href="/archive?page=<?= $page ?>" ><?= $page ?></a>
-<?php endif; ?>
-
-<?php endforeach; ?>
-<br>
-
+                                    as $key => $assignment): ?>
+                                    <td class="text-md text-gray-900 font-light px-6 py-4">
+                                        <?= $assignment['title'] ?>
+                                    </td>
+                                    <td class="text-md text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <?php foreach (explode(',', $assignment['name']) as $name): ?>
+                                            <span> <?= $name ?> </span><br>
+                                        <?php endforeach; ?>
+                                    </td>
+                                    <td class="text-md text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <?= $assignment['created_at'] ?>
+                                    </td>
+                                    <td class="text-md text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <?= $assignment['updated_at'] ?>
+                                    </td>
+                                </tr class="bg-white border-b">
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php if (count($assignments) > 0): ?>
+        <?php require __DIR__ . '/components/pagination.php' ?>
+    <?php endif; ?>
+</div>
 </body>
 </html>

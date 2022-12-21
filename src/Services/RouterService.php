@@ -51,6 +51,11 @@ class RouterService
             $method
         );
 
+        if ($controller === null && $function === null) {
+            require './views/error_page.php';
+            die;
+        }
+
         $c = new $controller();
 
         if (is_numeric($id) && !empty($params)) {

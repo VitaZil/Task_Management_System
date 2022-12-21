@@ -32,7 +32,12 @@ class TaskController
                 'employee_id' => [$request['employee']]
             ]);
 
-            header('Location: /');
+            $message = 'Successfully added new task!';
+
+//            header('Location: /');
+            $task = new Task();
+            $assignments = $task->getRunningAssignments();
+            require './views/assignment.php';
 
         } catch (NotTheSameEmployeeInOneTask $exception) {
             $message = $exception->getMessage();
@@ -55,12 +60,13 @@ class TaskController
     {
         $task = new Task();
         $currentPage = $request['page'] ?? 1;
-        $assignmentsPerPage = 5;
+        $assignmentsPerPage = 10;
 
         $assignments = $task->getArchiveAssignments($currentPage, $assignmentsPerPage);
         $dataForPage = $task->getPageNumber($assignmentsPerPage);
         $pageNumber = $dataForPage[0];
         $numberOfItems = $dataForPage[1];
+
         require './views/archive.php';
     }
 
