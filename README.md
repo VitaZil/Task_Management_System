@@ -2,7 +2,7 @@
 
 ## About The App
 Task Management App is a CRUD based project. It was created using MVC pattern. 
-Project database was design with Many-To-Many relationship in MySQL.
+Project database was design with MySQL and Many-To-Many relationship.
 
 ## In this Task Management App you can do these things:
 
