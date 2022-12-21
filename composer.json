@@ -13,6 +13,7 @@
     ],
     "require": {
         "phpoffice/phpspreadsheet": "^1.25",
-      "ext-mysqli": "*"
+      "ext-mysqli": "*",
+      "ext-pdo": "*"
     }
 }

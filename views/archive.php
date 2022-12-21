@@ -52,9 +52,7 @@
                                 </thead class="border-b">
                                 <tbody>
                                 <tr class="bg-white border-b">
-                                    <?php foreach ($assignments
-
-                                    as $key => $assignment): ?>
+                                    <?php foreach ($assignments as $key => $assignment): ?>
                                     <td class="text-md text-gray-900 font-light px-6 py-4">
                                         <?= $assignment['title'] ?>
                                     </td>

@@ -18,8 +18,6 @@ class TaskController
 
     public function store($request): void
     {
-        $task = new Task();
-
         try {
             if (($request['employee'][0] === $request['employee'][1])
                 || ($request['employee'][1] === $request['employee'][2] && $request['employee'][2] != '')
@@ -27,6 +25,7 @@ class TaskController
                 throw new NotTheSameEmployeeInOneTask;
             }
 
+            $task = new Task();
             $task->store([
                 'title' => $request['title'],
                 'employee_id' => [$request['employee']]
@@ -34,11 +33,9 @@ class TaskController
 
             $message = 'Successfully added new task!';
 
-//            header('Location: /');
-            $task = new Task();
             $assignments = $task->getRunningAssignments();
-            require './views/assignment.php';
 
+            require './views/assignment.php';
         } catch (NotTheSameEmployeeInOneTask $exception) {
             $message = $exception->getMessage();
             $employeeModel = new Employee();

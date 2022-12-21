@@ -84,6 +84,6 @@ class RouterService
                 return [$route['controller'], $route['function']];
             }
         }
-        return [null, null]; // Throw exception
+        return [null, null];
     }
 }

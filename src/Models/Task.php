@@ -16,8 +16,7 @@ class Task
         $database = new DatabaseService();
         $taskId = $database->execute($query);
 
-        foreach ($newTask['employee_id'][0] as  $employee) {
-
+        foreach ($newTask['employee_id'][0] as $employee) {
             if ($employee != '') {
                 $query = "
                 INSERT INTO employees_assignments (assignment_id, employee_id)
@@ -70,7 +69,7 @@ class Task
         $query = "SELECT COUNT(id) as page FROM assignments WHERE status='complete'";
         $database = new DatabaseService();
         $numberOfAssignments = $database->fetchAll($query);
-        $pageNumber = ceil($numberOfAssignments[0]['page']/$assignmentsPerPage);
+        $pageNumber = ceil($numberOfAssignments[0]['page'] / $assignmentsPerPage);
 
         return [$pageNumber, $numberOfAssignments[0]['page']];
     }
@@ -80,7 +79,8 @@ class Task
         $offset = $assignmentsPerPage * ($currentPage - 1);
 
         $query = "
-        SELECT a.id, a.title, a.status, GROUP_CONCAT( e.firstname, ' ', e.lastname) as name, a.created_at, a.updated_at FROM assignments a
+        SELECT a.id, a.title, a.status, GROUP_CONCAT( e.firstname, ' ', e.lastname) as name, a.created_at, a.updated_at 
+        FROM assignments a
         JOIN employees_assignments ea ON ea.assignment_id=a.id
         JOIN employees e ON ea.employee_id=e.id
         WHERE a.status='complete'
@@ -93,6 +93,4 @@ class Task
 
         return $database->fetchAll($query);
     }
-
-
 }

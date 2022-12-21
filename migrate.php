@@ -38,4 +38,3 @@ foreach ($queries as $query) {
     $statement = $pdo->prepare($query);
     $statement->execute();
 }
-

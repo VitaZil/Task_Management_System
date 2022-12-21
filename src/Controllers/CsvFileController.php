@@ -30,7 +30,8 @@ class CsvFileController
         JOIN employees e ON ea.employee_id=e.id
         WHERE a.status='complete'
         GROUP BY a.title, a.updated_at
-        ORDER BY a.updated_at DESC");
+        ORDER BY a.updated_at DESC
+        ");
 
         if ($query->num_rows > 0) {
             $i = 2;
@@ -47,7 +48,6 @@ class CsvFileController
 
         header('Content-Type: application/text-csv');
         header('Content-Disposition: attachment;filename=' . $filename);
-//        header('Cache-Control: max-age=0');
 
         $writer->setDelimiter(';');
         $writer->save('php://output');
