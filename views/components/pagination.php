@@ -20,10 +20,10 @@
             <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
 
                 <?php if (($currentPage - 1) <= 1): ?>
-                <a href="/archive?page=<?= $currentPage ?>"
+                <a href="?page=<?= $currentPage ?>"
                    class="relative inline-flex items-center rounded-l-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">
                     <?php else: ?>
-                    <a href="/archive?page=<?= $currentPage - 1 ?>"
+                    <a href="?page=<?= $currentPage - 1 ?>"
                        class="relative inline-flex items-center rounded-l-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">
                         <?php endif; ?>
                         <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
@@ -36,15 +36,15 @@
 
                     <?php foreach (range(1, $pageNumber) as $page): ?>
                         <?php if ($currentPage == $page): ?>
-                            <a href="/archive?page=<?= $page ?>" aria-current="page"
+                            <a href="?page=<?= $page ?>" aria-current="page"
                                class="relative z-10 inline-flex items-center border border-indigo-500 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600 focus:z-20"><?= $page ?></a>
                         <?php else: ?>
-                            <a href="/archive?page=<?= $page ?>"
+                            <a href="?page=<?= $page ?>"
                                class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"><?= $page ?></a>
                         <?php endif; ?>
                     <?php endforeach; ?>
 
-                    <a href="/archive?page=<?= $currentPage + 1 ?>"
+                    <a href="?page=<?= $currentPage + 1 ?>"
                        class="relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">
                         <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                              aria-hidden="true">

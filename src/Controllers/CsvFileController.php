@@ -5,6 +5,7 @@ namespace Vitab\TaskManagementSystem\Controllers;
 use mysqli;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
+use Vitab\TaskManagementSystem\Services\DatabaseService;
 
 class CsvFileController
 {
@@ -20,7 +21,14 @@ class CsvFileController
         $activeSheet->setCellValue('C1', 'Created At');
         $activeSheet->setCellValue('D1', 'Completed At');
 
-        $db = new mysqli('localhost:3306', 'root', '', 'management_system');
+        $database = new DatabaseService();
+
+        $db = new mysqli(
+            "localhost:$database->databaseLocalhost",
+            $database->databaseUsername,
+            $database->databasePassword,
+            $database->databaseName
+        );
 
         $query = $db->query("
         SELECT a.id, a.title, a.status, GROUP_CONCAT( e.firstname, ' ', e.lastname) as name, 
@@ -49,7 +57,6 @@ class CsvFileController
         header('Content-Type: application/text-csv');
         header('Content-Disposition: attachment;filename=' . $filename);
 
-        $writer->setDelimiter(';');
         $writer->save('php://output');
     }
 }

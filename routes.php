@@ -7,6 +7,10 @@ use Vitab\TaskManagementSystem\Services\RouterService;
 
 RouterService::get('/newemployee', EmployeeController::class, 'create');
 RouterService::post('/newemployee', EmployeeController::class, 'store');
+RouterService::get('/employees', EmployeeController::class, 'index');
+RouterService::post('/employees/delete', EmployeeController::class, 'delete');
+RouterService::get('/employees/{id}', EmployeeController::class, 'edit');
+RouterService::post('/employees/{id}', EmployeeController::class, 'update');
 
 RouterService::get('/newtask', TaskController::class, 'create');
 RouterService::post('/newtask', TaskController::class, 'store');

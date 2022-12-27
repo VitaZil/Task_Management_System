@@ -28,8 +28,10 @@ class Task
         }
     }
 
-    public function getRunningAssignments(): array
+    public function getRunningAssignments(int|string $currentPage, int $assignmentsPerPage): array
     {
+        $offset = $assignmentsPerPage * ($currentPage - 1);
+
         $query = "
         SELECT a.id, a.title, a.status, GROUP_CONCAT( e.firstname, ' ', e.lastname) as name, a.created_at, a.updated_at FROM assignments a
         JOIN employees_assignments ea ON ea.assignment_id=a.id
@@ -37,6 +39,7 @@ class Task
         WHERE a.status='running'
         GROUP BY a.title, a.updated_at
         ORDER BY a.updated_at DESC
+        LIMIT $assignmentsPerPage OFFSET $offset
         ";
 
         $database = new DatabaseService();
@@ -64,9 +67,9 @@ class Task
         $database->execute($query);
     }
 
-    public function getPageNumber(int $assignmentsPerPage): array
+    public function getPageNumber(int $assignmentsPerPage, string $status): array
     {
-        $query = "SELECT COUNT(id) as page FROM assignments WHERE status='complete'";
+        $query = "SELECT COUNT(id) as page FROM assignments WHERE status='$status'";
         $database = new DatabaseService();
         $numberOfAssignments = $database->fetchAll($query);
         $pageNumber = ceil($numberOfAssignments[0]['page'] / $assignmentsPerPage);

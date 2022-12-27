@@ -5,69 +5,73 @@ namespace Vitab\TaskManagementSystem\Controllers;
 use Vitab\TaskManagementSystem\Exceptions\NotTheSameEmployeeInOneTask;
 use Vitab\TaskManagementSystem\Models\Employee;
 use Vitab\TaskManagementSystem\Models\Task;
+use Vitab\TaskManagementSystem\Services\ValidationService;
 
 class TaskController
 {
     public function create(): void
     {
         $employeeModel = new Employee();
-        $employees = $employeeModel->getEmployees();
+        $employees = $employeeModel->getAvailableEmployees();
 
         require './views/new_task_form.php';
     }
 
-    public function store($request): void
+    public function store(array $request): void
     {
+        $task = new Task();
+
         try {
-            if (($request['employee'][0] === $request['employee'][1])
-                || ($request['employee'][1] === $request['employee'][2] && $request['employee'][2] != '')
-                || ($request['employee'][0] === $request['employee'][2])) {
+            if (ValidationService::checkIfEmployeeUniqueInTask($request['employee'])) {
                 throw new NotTheSameEmployeeInOneTask;
             }
 
-            $task = new Task();
             $task->store([
                 'title' => $request['title'],
                 'employee_id' => [$request['employee']]
             ]);
 
-            $message = 'Successfully added new task!';
+            $successMessage = 'Successfully added new task!';
 
-            $assignments = $task->getRunningAssignments();
+            header("Location: /?successmessage=$successMessage");
 
-            require './views/assignment.php';
         } catch (NotTheSameEmployeeInOneTask $exception) {
             $message = $exception->getMessage();
-            $employeeModel = new Employee();
-            $employees = $employeeModel->getEmployees();
+            $title = $request['title'];
 
-            require './views/new_task_form.php';
+            header("Location: /newtask?message=$message&title=$title");
         }
     }
 
-    public function edit(): void
+    public function edit(array|string $request): void
     {
         $task = new Task();
-        $assignments = $task->getRunningAssignments();
+        $currentPage = $request['page'] ?? 1;
+        $assignmentsPerPage = 5;
+
+        $assignments = $task->getRunningAssignments($currentPage, $assignmentsPerPage);
+        $dataForPage = $task->getPageNumber($assignmentsPerPage, 'running');
+        $pageNumber = $dataForPage[0];
+        $numberOfItems = $dataForPage[1];
 
         require './views/assignment.php';
     }
 
-    public function index($request): void
+    public function index(array|string $request): void
     {
         $task = new Task();
         $currentPage = $request['page'] ?? 1;
-        $assignmentsPerPage = 10;
+        $assignmentsPerPage = 5;
 
         $assignments = $task->getArchiveAssignments($currentPage, $assignmentsPerPage);
-        $dataForPage = $task->getPageNumber($assignmentsPerPage);
+        $dataForPage = $task->getPageNumber($assignmentsPerPage, 'complete');
         $pageNumber = $dataForPage[0];
         $numberOfItems = $dataForPage[1];
 
         require './views/archive.php';
     }
 
-    public function update($request): void
+    public function update(array $request): void
     {
         $task = new Task();
         $task->update((int)$request['complete']);
@@ -75,7 +79,7 @@ class TaskController
         header('Location: /archive');
     }
 
-    public function delete($request): void
+    public function delete(array $request): void
     {
         $task = new Task();
         $task->delete((int)$request['delete']);

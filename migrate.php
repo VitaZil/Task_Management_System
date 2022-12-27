@@ -30,7 +30,7 @@ $queries = [
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP,
         FOREIGN KEY (assignment_id ) REFERENCES assignments(id) ON DELETE CASCADE,
-        FOREIGN KEY (employee_id ) REFERENCES employees(id)
+        FOREIGN KEY (employee_id ) REFERENCES employees(id) ON DELETE CASCADE
     )'
 ];
 

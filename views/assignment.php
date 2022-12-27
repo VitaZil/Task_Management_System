@@ -116,6 +116,9 @@
             </div>
         </div>
     </div>
+    <?php if (count($assignments) > 0): ?>
+        <?php require __DIR__ . '/components/pagination.php' ?>
+    <?php endif; ?>
 </div>
 </body>
 </html>
