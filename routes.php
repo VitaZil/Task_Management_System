@@ -18,5 +18,6 @@ RouterService::get('/', TaskController::class, 'edit');
 RouterService::post('/complete', TaskController::class, 'update');
 RouterService::get('/archive', TaskController::class, 'index');
 RouterService::post('/delete', TaskController::class, 'delete');
+RouterService::post('/search', TaskController::class, 'search');
 
 RouterService::get('/export', CsvFileController::class, 'exportCsv');

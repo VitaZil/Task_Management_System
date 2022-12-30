@@ -2,6 +2,7 @@
 
 namespace Vitab\TaskManagementSystem\Controllers;
 
+use Vitab\TaskManagementSystem\Exceptions\CantDeleteException;
 use Vitab\TaskManagementSystem\Exceptions\NameIsTooShortException;
 use Vitab\TaskManagementSystem\Exceptions\OnlyLettersAllowedInNameException;
 use Vitab\TaskManagementSystem\Models\Employee;
@@ -11,14 +12,12 @@ class EmployeeController
 {
     public function create(): void
     {
-        require './views/new_employee_form.php';
+        require './views/forms/new_employee_form.php';
     }
 
     public function store(array $request): void
     {
         $employee = new Employee();
-
-        $message = '';
 
         try {
             if (ValidationService::checkNameLength($request['firstname'])
@@ -67,7 +66,7 @@ class EmployeeController
         $pageNumber = $dataForPage[0];
         $numberOfItems = $dataForPage[1];
 
-        require './views/employees.php';
+        require './views/listings/employees.php';
     }
 
     public function edit(int $id): void
@@ -75,7 +74,7 @@ class EmployeeController
         $employeeModel = new Employee();
         $employee = $employeeModel->getEmployee($id);
 
-        require './views/employee_show.php';
+        require './views/forms/employee_show.php';
     }
 
     public function update(int $id): void
@@ -117,11 +116,19 @@ class EmployeeController
     public function delete(array $request): void
     {
         $employee = new Employee();
-        $employee->delete((int)$request['delete']);
 
-        $successMessage = 'Employee was successfully deleted!';
+        try {
+            if (!$employee->delete($request['delete'])) {
+                throw new CantDeleteException;
+            }
+            $successMessage = 'Employee was successfully deleted!';
 
-        header("Location: /employees?successmessage=$successMessage");
+            header("Location: /employees?successmessage=$successMessage");
+
+        } catch (CantDeleteException $exception) {
+            $message = $exception->getMessage();
+
+            header("Location: /employees?message=$message");
+        }
     }
-
 }

@@ -2,6 +2,7 @@
 
 namespace Vitab\TaskManagementSystem\Models;
 
+use Vitab\TaskManagementSystem\Exceptions\CantDeleteException;
 use Vitab\TaskManagementSystem\Services\DatabaseService;
 
 class Employee
@@ -24,14 +25,15 @@ class Employee
         $offset = $assignmentsPerPage * ($currentPage - 1);
 
         $query = "
-        SELECT e.id, e.firstname, e.lastname, e.multiworker, e.created_at, a.status,
-       count(if(a.status='complete' OR a.status is null, null, 1)) as running_tasks,
-       GROUP_CONCAT(a.title) as tasks_titles
-FROM employees e
-         Left JOIN employees_assignments ea ON ea.employee_id=e.id
-         LEFT JOIN assignments a ON ea.assignment_id=a.id
-GROUP BY e.id, e.created_at
-ORDER BY e.created_at DESC
+        SELECT e.id, e.firstname, e.lastname, e.multiworker, a.status, 
+        GROUP_CONCAT(IF(a.status='running', a.title, null)) as tasks_titles,
+        COUNT(IF(a.status='complete' OR a.status is null, null, 'working')) as running_tasks,
+        e.created_at
+        FROM employees e
+        LEFT JOIN employees_assignments ea ON ea.employee_id=e.id
+        LEFT JOIN assignments a ON ea.assignment_id=a.id
+        GROUP BY e.id
+        ORDER BY e.created_at DESC 
         LIMIT $assignmentsPerPage OFFSET $offset
         ";
 
@@ -90,7 +92,7 @@ ORDER BY e.created_at DESC
 
     public function update(int $id, array $request): void
     {
-        if($request['multiworker'] == 1) {
+        if ($request['multiworker'] == 1) {
             $multiworker = 1;
         } else {
             $multiworker = 0;
@@ -106,11 +108,31 @@ ORDER BY e.created_at DESC
         $database->execute($query);
     }
 
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
-        $query = "DELETE FROM employees WHERE id=$id";
+        $query = "
+        SELECT e.id,
+        COUNT(IF(a.status='complete' OR a.status is null, null, 'working')) as running_tasks
+        FROM employees e
+        LEFT JOIN employees_assignments ea ON ea.employee_id=e.id
+        LEFT JOIN assignments a ON ea.assignment_id=a.id
+        WHERE e.id=$id
+        GROUP BY e.id
+        ";
 
         $database = new DatabaseService();
-        $database->execute($query);
+        $employee = $database->fetchAll($query);
+
+        if ($employee[0]['running_tasks'] === 0) {
+            $query = "DELETE FROM employees WHERE id=$id";
+            $database = new DatabaseService();
+            $database->execute($query);
+            return true;
+        }
+        if ($employee[0]['running_tasks'] !== 0) {
+            return false;
+        }
+
+        return $employee[0]['running_tasks'] !== 0 ? false : true;
     }
 }

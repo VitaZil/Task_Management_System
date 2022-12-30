@@ -52,7 +52,7 @@ class RouterService
         );
 
         if ($controller === null && $function === null) {
-            require './views/error_page.php';
+            require './views/components/error_page.php';
             die;
         }
 

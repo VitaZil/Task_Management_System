@@ -1,9 +1,13 @@
 <?php
 
+use Vitab\TaskManagementSystem\Services\DatabaseService;
+
+$database = new DatabaseService();
+
 $pdo = new PDO(
-    'mysql:host=localhost:3306',
-    'root',
-    '',
+    'mysql:host=localhost:' . $database->databaseLocalhost,
+    $database->databaseUsername,
+    $database->databasePassword,
     [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION],
 );
 
@@ -30,7 +34,7 @@ $queries = [
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP,
         FOREIGN KEY (assignment_id ) REFERENCES assignments(id) ON DELETE CASCADE,
-        FOREIGN KEY (employee_id ) REFERENCES employees(id) ON DELETE CASCADE
+        FOREIGN KEY (employee_id ) REFERENCES employees(id) ON DELETE RESTRICT
     )'
 ];
 

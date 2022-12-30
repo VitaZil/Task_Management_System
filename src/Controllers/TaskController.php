@@ -14,7 +14,7 @@ class TaskController
         $employeeModel = new Employee();
         $employees = $employeeModel->getAvailableEmployees();
 
-        require './views/new_task_form.php';
+        require './views/forms/new_task_form.php';
     }
 
     public function store(array $request): void
@@ -54,7 +54,7 @@ class TaskController
         $pageNumber = $dataForPage[0];
         $numberOfItems = $dataForPage[1];
 
-        require './views/assignment.php';
+        require './views/listings/assignment.php';
     }
 
     public function index(array|string $request): void
@@ -68,7 +68,7 @@ class TaskController
         $pageNumber = $dataForPage[0];
         $numberOfItems = $dataForPage[1];
 
-        require './views/archive.php';
+        require './views/listings/archive.php';
     }
 
     public function update(array $request): void
@@ -85,5 +85,13 @@ class TaskController
         $task->delete((int)$request['delete']);
 
         header('Location: /');
+    }
+
+    public function search($request): void
+    {
+        $task= new Task();
+        $assignments = $task->search(strtolower($request['search']));
+
+        require './views/listings/assignment.php';
     }
 }

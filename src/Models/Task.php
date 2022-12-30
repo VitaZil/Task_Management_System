@@ -22,7 +22,6 @@ class Task
                 INSERT INTO employees_assignments (assignment_id, employee_id)
                 VALUES ($taskId, $employee)
                 ";
-
                 $database->execute($query);
             }
         }
@@ -95,5 +94,28 @@ class Task
         $database = new DatabaseService();
 
         return $database->fetchAll($query);
+    }
+
+    public function search(string $searchDetails): array
+    {
+        $query = "
+        SELECT a.id, a.title, a.status, GROUP_CONCAT(e.firstname, ' ', e.lastname) as name, a.created_at, a.updated_at
+        FROM assignments a
+        LEFT JOIN employees_assignments ea ON ea.assignment_id=a.id
+        LEFT JOIN employees e ON ea.employee_id=e.id
+        WHERE status='running'
+        GROUP BY a.title
+        ";
+
+        $database = new DatabaseService();
+
+        $assignments = $database->fetchAll($query);
+
+        return array_filter($assignments, function ($assignment) use ($searchDetails) {
+           if (strstr(strtolower($assignment['name']), $searchDetails)
+               || strstr(strtolower($assignment['title']), $searchDetails)) {
+               return true;
+           }
+       });
     }
 }

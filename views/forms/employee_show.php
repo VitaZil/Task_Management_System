@@ -30,21 +30,17 @@
                 </div>
             <?php endif; ?>
 
-            <label class="ml-2 block text-sm text-gray-900" for="firstname">Current First
-                Name: <?= $employee['firstname'] ?>
-            </label>
+            <label class="ml-2 block text-sm text-gray-900" for="firstname">First Name</label>
             <input class="relative block w-full appearance-none rounded-none rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                   type="text" maxlength="10" id="firstname" name="firstname" placeholder="New First Name" required>
+                   type="text" maxlength="10" id="firstname" name="firstname" placeholder="New First Name" value="<?= $employee['firstname'] ?>"required>
 
-            <label class="ml-2 block text-sm text-gray-900" for="lastname">Current Last
-                Name: <?= $employee['lastname'] ?>
-            </label>
+            <label class="ml-2 block text-sm text-gray-900" for="lastname">Last Name</label>
             <input class="relative block w-full appearance-none rounded-none rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                   type="text" maxlength="10" id="lastname" name="lastname" placeholder="New Last Name" required>
+                   type="text" maxlength="10" id="lastname" name="lastname" placeholder="New Last Name" value="<?= $employee['lastname'] ?>" required>
 
             <div class="flex items-center">
 
-                <?php if ($employee['multiworker'] === 'null'): ?>
+                <?php if ($employee['multiworker'] === 0): ?>
                     <input class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" type="checkbox"
                            name="multiworker" id="type" value="multiworker" placeholder="Multi-worker">
                 <?php else: ?>

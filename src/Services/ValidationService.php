@@ -2,8 +2,6 @@
 
 namespace Vitab\TaskManagementSystem\Services;
 
-use Vitab\TaskManagementSystem\Exceptions\OnlyLettersAllowedInNameException;
-
 class ValidationService
 {
     static public function validateName(string $name): bool
@@ -22,5 +20,4 @@ class ValidationService
         || ($employees[1] === $employees[2] && $employees[2] != '')
         || ($employees[0] === $employees[2]));
     }
-
 }
