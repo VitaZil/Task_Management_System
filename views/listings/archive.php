@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<?php require __DIR__ . '/components/navigation.php' ?>
+<?php require './views/components/navigation.php' ?>
 
 <div class="items-center justify-center py-2 px-20 ">
 
@@ -78,7 +78,7 @@
         </div>
     </div>
     <?php if (count($assignments) > 0): ?>
-        <?php require __DIR__ . '/components/pagination.php' ?>
+        <?php require './views/components/pagination.php' ?>
     <?php endif; ?>
 </div>
 </body>

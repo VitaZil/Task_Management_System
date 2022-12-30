@@ -10,10 +10,10 @@
 </head>
 <body>
 
-<?php require __DIR__ . '/components/navigation.php' ?>
-<?php require __DIR__ . '/components/flash_message.php' ?>
-<?php require __DIR__ . '/components/error_message.php' ?>
-<?php require __DIR__ . '/components/second-nav.php' ?>
+<?php require './views/components/navigation.php' ?>
+<?php require './views/components/flash_message.php' ?>
+<?php require './views/components/error_message.php' ?>
+<?php require './views/components/second-nav.php' ?>
 
 <div class="items-center justify-center py-5 px-20 ">
     <div class="flex flex-col">
@@ -115,7 +115,7 @@
         </div>
     </div>
     <?php if (count($employees) > 0): ?>
-        <?php require __DIR__ . '/components/pagination.php' ?>
+        <?php require './views/components/pagination.php' ?>
     <?php endif; ?>
 </div>
 </body>

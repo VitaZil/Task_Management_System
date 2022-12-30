@@ -10,12 +10,12 @@
 </head>
 <body>
 
-<?php require __DIR__ . '/components/navigation.php' ?>
-<?php require __DIR__ . '/components/flash_message.php' ?>
+<?php require './views/components/navigation.php' ?>
+<?php require './views/components/flash_message.php' ?>
 
 <div class="flex items-center justify-center px-20 ">
-    <?php require __DIR__ . '/components/second-nav.php' ?>
-        <?php require __DIR__ . '/components/search.php' ?>
+    <?php require './views/components/second-nav.php' ?>
+        <?php require './views/components/search.php' ?>
 </div>
 
 <div class="items-center justify-center px-20 ">
@@ -100,7 +100,7 @@
 
     <?php if (isset($currentPage)): ?>
     <?php if (count($assignments) > 0): ?>
-        <?php require __DIR__ . '/components/pagination.php' ?>
+        <?php require './views/components/pagination.php' ?>
     <?php endif; ?>
     <?php endif; ?>
 </div>
