@@ -1,13 +1,13 @@
 <?php
 
-use Vitab\TaskManagementSystem\Services\DatabaseService;
-
-$database = new DatabaseService();
+$databaseUsername = 'root';
+$databasePassword = '';
+$databaseLocalhost = 3306;
 
 $pdo = new PDO(
-    'mysql:host=localhost:' . $database->databaseLocalhost,
-    $database->databaseUsername,
-    $database->databasePassword,
+    'mysql:host=localhost:' . $databaseLocalhost,
+    $databaseUsername,
+    $databasePassword,
     [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION],
 );
 
