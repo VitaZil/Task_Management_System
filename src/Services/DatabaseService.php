@@ -9,14 +9,13 @@ class DatabaseService
     public string $databaseUsername = 'root';
     public string $databasePassword = '';
     public int $databaseLocalhost = 3306;
-    public string $databaseName = 'management_system';
 
     private PDO $connection;
 
     public function __construct()
     {
         $this->connection = new PDO(
-            "mysql:host=localhost:$this->databaseLocalhost;dbname=$this->databaseName",
+            "mysql:host=localhost:$this->databaseLocalhost;dbname=management_system",
             $this->databaseUsername,
             $this->databasePassword,
             [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION],

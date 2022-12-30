@@ -27,7 +27,7 @@ class CsvFileController
             "localhost:$database->databaseLocalhost",
             $database->databaseUsername,
             $database->databasePassword,
-            $database->databaseName
+            'management_system'
         );
 
         $query = $db->query("
